@@ -11,7 +11,7 @@ import SwiftUI
 struct AidoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TodosView()
         }
         .modelContainer(for: [Todo.self])
     }

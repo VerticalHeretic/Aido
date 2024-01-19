@@ -8,17 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		A014303A2B597E8300668B9B /* AidoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01430392B597E8300668B9B /* AidoApp.swift */; };
-		A014303C2B597E8300668B9B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A014303B2B597E8300668B9B /* ContentView.swift */; };
+		A014303C2B597E8300668B9B /* TodosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A014303B2B597E8300668B9B /* TodosView.swift */; };
 		A014303E2B597E8400668B9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A014303D2B597E8400668B9B /* Assets.xcassets */; };
 		A01430412B597E8400668B9B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A01430402B597E8400668B9B /* Preview Assets.xcassets */; };
+		A01430482B5A7AFC00668B9B /* CreateTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01430472B5A7AFC00668B9B /* CreateTodoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A01430362B597E8300668B9B /* Aido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01430392B597E8300668B9B /* AidoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AidoApp.swift; sourceTree = "<group>"; };
-		A014303B2B597E8300668B9B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A014303B2B597E8300668B9B /* TodosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodosView.swift; sourceTree = "<group>"; };
 		A014303D2B597E8400668B9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A01430402B597E8400668B9B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A01430472B5A7AFC00668B9B /* CreateTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTodoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,9 +54,10 @@
 			isa = PBXGroup;
 			children = (
 				A01430392B597E8300668B9B /* AidoApp.swift */,
-				A014303B2B597E8300668B9B /* ContentView.swift */,
+				A014303B2B597E8300668B9B /* TodosView.swift */,
 				A014303D2B597E8400668B9B /* Assets.xcassets */,
 				A014303F2B597E8400668B9B /* Preview Content */,
+				A01430472B5A7AFC00668B9B /* CreateTodoView.swift */,
 			);
 			path = Aido;
 			sourceTree = "<group>";
@@ -137,7 +140,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A014303C2B597E8300668B9B /* ContentView.swift in Sources */,
+				A014303C2B597E8300668B9B /* TodosView.swift in Sources */,
+				A01430482B5A7AFC00668B9B /* CreateTodoView.swift in Sources */,
 				A014303A2B597E8300668B9B /* AidoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
