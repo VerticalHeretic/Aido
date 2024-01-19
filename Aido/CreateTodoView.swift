@@ -15,36 +15,41 @@ struct CreateTodoView: View {
     @State private var model = Model()
 
     var body: some View {
-        VStack(alignment: .leading) {
+        List {
             TextField("Name of the task", text: $model.name)
                 .background(.red.opacity(model.showMissingFields ? 1.0 : 0))
 
-            HStack {
-                Button(action: {
-                    withAnimation {
-                        model.isShowingDatePicker.toggle()
-                    }
-                }, label: {
-                    if model.isShowingDatePicker {
-                        Image(systemName: "flag.fill")
-                            .foregroundStyle(.red)
+            VStack {
+                Toggle(isOn: $model.isShowingDatePicker) {
+                    HStack {
+                        Image(systemName: "calendar")
+                            .padding(4)
+                            .background(Color.red)
+                            .clipShape(RoundedRectangle(cornerRadius: 2))
+                            .foregroundStyle(Color.white)
 
-                    } else {
-                        Image(systemName: "flag")
-                            .foregroundStyle(.gray)
+                        VStack(alignment: .leading) {
+                            Text("Deadline")
+
+                            if model.isShowingDatePicker {
+                                Text(model.deadline.formatted(date: .long, time: .omitted))
+                                    .font(.footnote)
+                                    .foregroundStyle(.blue)
+                            }
+                        }
                     }
-                })
+                }
 
                 if model.isShowingDatePicker {
                     DatePicker(selection: $model.deadline, displayedComponents: .date) {
 
                     }
+                    .datePickerStyle(.graphical)
                 }
             }
 
             Spacer()
         }
-        .padding()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -59,6 +64,8 @@ struct CreateTodoView: View {
             }
         }
         .navigationTitle("Create Todo")
+        .navigationBarTitleDisplayMode(.inline)
+        .animation(.easeInOut, value: model.isShowingDatePicker)
     }
 }
 

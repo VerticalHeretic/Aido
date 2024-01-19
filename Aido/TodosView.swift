@@ -23,7 +23,9 @@ class Todo {
 
 struct TodosView: View {
     @Environment(\.modelContext) var modelContext
-    @Query(sort: \Todo.deadline) var todos: [Todo]
+    @Query(filter: #Predicate<Todo> { todo in
+        todo.isCompleted == false
+    }, sort: \Todo.deadline) var todos: [Todo]
 
     @Observable
     class Model {
@@ -36,15 +38,28 @@ struct TodosView: View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
                 List(todos) { todo in
-                    VStack(alignment: .leading) {
-                        Text(todo.name)
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(todo.name)
 
-                        if let deadline = todo.deadline {
-                            Text(deadline.formatted(.relative(presentation: .named)).capitalized)
-                                .font(.footnote)
-                                .foregroundStyle(.red)
+                            if let deadline = todo.deadline {
+                                Text(deadline.formatted(.relative(presentation: .named)).capitalized)
+                                    .font(.footnote)
+                                    .foregroundStyle(.red)
+                            }
                         }
 
+                        Spacer()
+
+                        Button(action: {
+                            todo.isCompleted = true
+                        }, label: {
+                            Image(systemName: "square")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundStyle(.secondary)
+                        })
+                        .buttonStyle(.plain)
                     }
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
@@ -53,9 +68,7 @@ struct TodosView: View {
                             Label("Delete", systemImage: "trash")
                         }
                     }
-
                 }
-
 
                 Button(action: {
                     model.isShowingCreateTask = true
@@ -71,6 +84,7 @@ struct TodosView: View {
                         .padding()
                 })
             }
+            .navigationTitle("Todos")
             .sheet(isPresented: $model.isShowingCreateTask) {
                 NavigationStack {
                     CreateTodoView()
