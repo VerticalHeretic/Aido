@@ -5,8 +5,8 @@
 //  Created by Łukasz Stachnik on 18/01/2024.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 @Model
 class Todo {
@@ -26,11 +26,6 @@ struct TodosView: View {
     @Query(filter: #Predicate<Todo> { todo in
         todo.isCompleted == false
     }, sort: \Todo.deadline) var todos: [Todo]
-
-    @Observable
-    class Model {
-        var isShowingCreateTask = false
-    }
 
     @State private var model = Model()
 
@@ -91,6 +86,13 @@ struct TodosView: View {
                 }
             }
         }
+    }
+}
+
+extension TodosView {
+    @Observable
+    class Model {
+        var isShowingCreateTask = false
     }
 }
 

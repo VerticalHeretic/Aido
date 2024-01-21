@@ -5,8 +5,8 @@
 //  Created by Łukasz Stachnik on 19/01/2024.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct CreateTodoView: View {
     @Environment(\.modelContext) var modelContext
@@ -16,8 +16,21 @@ struct CreateTodoView: View {
 
     var body: some View {
         List {
-            TextField("Name of the task", text: $model.name)
-                .background(.red.opacity(model.showMissingFields ? 1.0 : 0))
+            HStack {
+                TextField("Name of the task", text: $model.name)
+                    .background(.red.opacity(model.showMissingFields ? 1.0 : 0))
+
+                Button {
+                    model.description = ""
+                    model.provider.generate(prompt: "This is a Todo app, and I need a summary for given task with some actionable items: \(model.name)") { response in
+                        model.description += response
+                    }
+                } label: {
+                    Image(systemName: "text.badge.plus")
+                }
+            }
+
+            TextEditor(text: $model.description)
 
             VStack {
                 Toggle(isOn: $model.isShowingDatePicker) {
@@ -41,10 +54,8 @@ struct CreateTodoView: View {
                 }
 
                 if model.isShowingDatePicker {
-                    DatePicker(selection: $model.deadline, displayedComponents: .date) {
-
-                    }
-                    .datePickerStyle(.graphical)
+                    DatePicker(selection: $model.deadline, displayedComponents: .date) {}
+                        .datePickerStyle(.graphical)
                 }
             }
 
@@ -60,7 +71,6 @@ struct CreateTodoView: View {
                 } label: {
                     Text("Save")
                 }
-
             }
         }
         .navigationTitle("Create Todo")
@@ -70,14 +80,20 @@ struct CreateTodoView: View {
 }
 
 extension CreateTodoView {
-
     @Observable
     class Model {
         var name: String = ""
-        var deadline: Date = Date()
+        var deadline: Date = .init()
+        var description: String = ""
 
         var isShowingDatePicker: Bool = false
         var showMissingFields: Bool = false
+
+        let provider: OllamaProvider
+
+        init(provider: OllamaProvider = .init()) {
+            self.provider = provider
+        }
 
         func isValidForSaving() -> Bool {
             if name.isEmpty {
