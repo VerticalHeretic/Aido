@@ -21,16 +21,18 @@ struct CreateTodoView: View {
                     .background(.red.opacity(model.showMissingFields ? 1.0 : 0))
 
                 Button {
-                    model.description = ""
-                    model.provider.generate(prompt: "This is a Todo app, and I need a summary for given task with some actionable items: \(model.name)") { response in
-                        model.description += response
+                    model.notes = ""
+                    model.provider.generate(prompt: "Create a action plan for given todo (simple form): \(model.name)") { response in
+                        model.notes += response
                     }
                 } label: {
                     Image(systemName: "text.badge.plus")
                 }
             }
 
-            TextEditor(text: $model.description)
+            if !model.notes.isEmpty {
+                TextEditor(text: $model.notes)
+            }
 
             VStack {
                 Toggle(isOn: $model.isShowingDatePicker) {
@@ -84,14 +86,14 @@ extension CreateTodoView {
     class Model {
         var name: String = ""
         var deadline: Date = .init()
-        var description: String = ""
+        var notes: String = ""
 
         var isShowingDatePicker: Bool = false
         var showMissingFields: Bool = false
 
-        let provider: OllamaProvider
+        let provider: ModelProvider
 
-        init(provider: OllamaProvider = .init()) {
+        init(provider: ModelProvider = OllamaProvider()) {
             self.provider = provider
         }
 
@@ -107,6 +109,7 @@ extension CreateTodoView {
         func createTodo() -> Todo {
             Todo(
                 name: name,
+                notes: notes.isEmpty ? nil : notes,
                 deadline: isShowingDatePicker ? deadline : nil
             )
         }

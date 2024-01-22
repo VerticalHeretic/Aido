@@ -24,7 +24,12 @@ struct GenerateRequest: Codable {
     let prompt: String
 }
 
-final class OllamaProvider {
+protocol ModelProvider {
+    func generate(prompt: String, responseHandler: @escaping (String) -> ())
+}
+
+final class OllamaProvider: ModelProvider {
+
     func generate(prompt: String, responseHandler: @escaping (String) -> ()) {
         let request = GenerateRequest(model: "mistral", prompt: prompt)
         try! print(request.jsonPrettyPrinted())

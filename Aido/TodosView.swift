@@ -11,12 +11,17 @@ import SwiftUI
 @Model
 class Todo {
     var name: String
+    var notes: String?
     var deadline: Date?
     var isCompleted: Bool
 
-    init(name: String, deadline: Date? = nil, isCompleted: Bool = false) {
+    init(name: String,
+         notes: String? = nil,
+         deadline: Date? = nil,
+         isCompleted: Bool = false) {
         self.name = name
         self.deadline = deadline
+        self.notes = notes
         self.isCompleted = isCompleted
     }
 }
@@ -36,6 +41,13 @@ struct TodosView: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Text(todo.name)
+
+                            if let notes = todo.notes {
+                                Text(notes)
+                                    .lineLimit(3)
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                            }
 
                             if let deadline = todo.deadline {
                                 Text(deadline.formatted(.relative(presentation: .named)).capitalized)
