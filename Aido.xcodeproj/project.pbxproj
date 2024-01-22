@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A00BBF882B5F005E004F4885 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00BBF872B5F005E004F4885 /* Todo.swift */; };
+		A00BBF8C2B5F05F9004F4885 /* DebugDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00BBF8B2B5F05F9004F4885 /* DebugDashboard.swift */; };
 		A014303A2B597E8300668B9B /* AidoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01430392B597E8300668B9B /* AidoApp.swift */; };
 		A014303C2B597E8300668B9B /* TodosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A014303B2B597E8300668B9B /* TodosView.swift */; };
 		A014303E2B597E8400668B9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A014303D2B597E8400668B9B /* Assets.xcassets */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A00BBF872B5F005E004F4885 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
+		A00BBF8B2B5F05F9004F4885 /* DebugDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugDashboard.swift; sourceTree = "<group>"; };
 		A01430362B597E8300668B9B /* Aido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01430392B597E8300668B9B /* AidoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AidoApp.swift; sourceTree = "<group>"; };
 		A014303B2B597E8300668B9B /* TodosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodosView.swift; sourceTree = "<group>"; };
@@ -39,6 +43,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A00BBF862B5F0056004F4885 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A00BBF872B5F005E004F4885 /* Todo.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A00BBF892B5F0098004F4885 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				A072C89D2B5AC773001B806C /* OllamaProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		A00BBF8A2B5F05EC004F4885 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A00BBF8B2B5F05F9004F4885 /* DebugDashboard.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A014302D2B597E8300668B9B = {
 			isa = PBXGroup;
 			children = (
@@ -58,13 +86,15 @@
 		A01430382B597E8300668B9B /* Aido */ = {
 			isa = PBXGroup;
 			children = (
+				A00BBF8A2B5F05EC004F4885 /* View */,
+				A00BBF892B5F0098004F4885 /* Providers */,
+				A00BBF862B5F0056004F4885 /* Models */,
 				A072C89F2B5ACAA8001B806C /* Info.plist */,
 				A01430392B597E8300668B9B /* AidoApp.swift */,
 				A014303B2B597E8300668B9B /* TodosView.swift */,
 				A014303D2B597E8400668B9B /* Assets.xcassets */,
 				A014303F2B597E8400668B9B /* Preview Content */,
 				A01430472B5A7AFC00668B9B /* CreateTodoView.swift */,
-				A072C89D2B5AC773001B806C /* OllamaProvider.swift */,
 			);
 			path = Aido;
 			sourceTree = "<group>";
@@ -155,8 +185,10 @@
 			files = (
 				A072C89E2B5AC773001B806C /* OllamaProvider.swift in Sources */,
 				A014303C2B597E8300668B9B /* TodosView.swift in Sources */,
+				A00BBF8C2B5F05F9004F4885 /* DebugDashboard.swift in Sources */,
 				A01430482B5A7AFC00668B9B /* CreateTodoView.swift in Sources */,
 				A014303A2B597E8300668B9B /* AidoApp.swift in Sources */,
+				A00BBF882B5F005E004F4885 /* Todo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

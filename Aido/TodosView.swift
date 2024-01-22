@@ -5,24 +5,42 @@
 //  Created by Łukasz Stachnik on 18/01/2024.
 //
 
+import Observation
 import SwiftData
 import SwiftUI
 
-@Model
-class Todo {
-    var name: String
-    var notes: String?
-    var deadline: Date?
-    var isCompleted: Bool
+@Observable
+final class AppConfiguration {
 
-    init(name: String,
-         notes: String? = nil,
-         deadline: Date? = nil,
-         isCompleted: Bool = false) {
-        self.name = name
-        self.deadline = deadline
-        self.notes = notes
-        self.isCompleted = isCompleted
+    static let shared = AppConfiguration(modelProvider: OllamaProvider())
+
+    var modelProvider: ModelProvider
+
+    init(modelProvider: ModelProvider) {
+        self.modelProvider = modelProvider
+    }
+}
+
+@Observable
+final class NavigationStackManager {
+
+    enum Destination: Hashable {
+        case taskDetails(todo: Todo)
+        case debugDashboard
+    }
+
+    var navPath = NavigationPath()
+
+    func navigate(to destination: Destination) {
+        navPath.append(destination)
+    }
+
+    func navigateBack() {
+        navPath.removeLast()
+    }
+
+    func navigateToRoot() {
+        navPath.removeLast(navPath.count)
     }
 }
 
@@ -34,8 +52,10 @@ struct TodosView: View {
 
     @State private var model = Model()
 
+    @State private var navigationStackManager = NavigationStackManager()
+
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationStackManager.navPath) {
             ZStack(alignment: .bottomTrailing) {
                 List(todos) { todo in
                     HStack {
@@ -75,6 +95,9 @@ struct TodosView: View {
                             Label("Delete", systemImage: "trash")
                         }
                     }
+                    .onTapGesture {
+                        navigationStackManager.navigate(to: .taskDetails(todo: todo))
+                    }
                 }
 
                 Button(action: {
@@ -95,6 +118,24 @@ struct TodosView: View {
             .sheet(isPresented: $model.isShowingCreateTask) {
                 NavigationStack {
                     CreateTodoView()
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        navigationStackManager.navigate(to: .debugDashboard)
+                    } label: {
+                        Label("Debug Dashboard", systemImage: "list.dash")
+                    }
+
+                }
+            }
+            .navigationDestination(for: NavigationStackManager.Destination.self) { destination in
+                switch destination {
+                case .debugDashboard:
+                    DebugDashboard()
+                case .taskDetails(let todo):
+                    Text(todo.name)
                 }
             }
         }

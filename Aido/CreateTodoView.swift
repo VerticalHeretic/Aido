@@ -82,6 +82,7 @@ struct CreateTodoView: View {
 }
 
 extension CreateTodoView {
+
     @Observable
     class Model {
         var name: String = ""
@@ -93,7 +94,7 @@ extension CreateTodoView {
 
         let provider: ModelProvider
 
-        init(provider: ModelProvider = OllamaProvider()) {
+        init(provider: ModelProvider = AppConfiguration.shared.modelProvider) {
             self.provider = provider
         }
 
