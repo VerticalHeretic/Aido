@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A00BBF882B5F005E004F4885 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00BBF872B5F005E004F4885 /* Todo.swift */; };
 		A00BBF8C2B5F05F9004F4885 /* DebugDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00BBF8B2B5F05F9004F4885 /* DebugDashboard.swift */; };
+		A00BBF8E2B6016D5004F4885 /* GPTProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00BBF8D2B6016D5004F4885 /* GPTProvider.swift */; };
 		A014303A2B597E8300668B9B /* AidoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01430392B597E8300668B9B /* AidoApp.swift */; };
 		A014303C2B597E8300668B9B /* TodosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A014303B2B597E8300668B9B /* TodosView.swift */; };
 		A014303E2B597E8400668B9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A014303D2B597E8400668B9B /* Assets.xcassets */; };
@@ -16,11 +17,13 @@
 		A01430482B5A7AFC00668B9B /* CreateTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01430472B5A7AFC00668B9B /* CreateTodoView.swift */; };
 		A072C89C2B5AC74F001B806C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A072C89B2B5AC74F001B806C /* Alamofire */; };
 		A072C89E2B5AC773001B806C /* OllamaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A072C89D2B5AC773001B806C /* OllamaProvider.swift */; };
+		A07BB0582B60331400DAB36D /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A07BB0572B60331400DAB36D /* KeychainAccess */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A00BBF872B5F005E004F4885 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		A00BBF8B2B5F05F9004F4885 /* DebugDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugDashboard.swift; sourceTree = "<group>"; };
+		A00BBF8D2B6016D5004F4885 /* GPTProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTProvider.swift; sourceTree = "<group>"; };
 		A01430362B597E8300668B9B /* Aido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01430392B597E8300668B9B /* AidoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AidoApp.swift; sourceTree = "<group>"; };
 		A014303B2B597E8300668B9B /* TodosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodosView.swift; sourceTree = "<group>"; };
@@ -36,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A07BB0582B60331400DAB36D /* KeychainAccess in Frameworks */,
 				A072C89C2B5AC74F001B806C /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				A072C89D2B5AC773001B806C /* OllamaProvider.swift */,
+				A00BBF8D2B6016D5004F4885 /* GPTProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -125,6 +130,7 @@
 			name = Aido;
 			packageProductDependencies = (
 				A072C89B2B5AC74F001B806C /* Alamofire */,
+				A07BB0572B60331400DAB36D /* KeychainAccess */,
 			);
 			productName = Aido;
 			productReference = A01430362B597E8300668B9B /* Aido.app */;
@@ -156,6 +162,7 @@
 			mainGroup = A014302D2B597E8300668B9B;
 			packageReferences = (
 				A072C89A2B5AC74F001B806C /* XCRemoteSwiftPackageReference "Alamofire" */,
+				A07BB0562B60331400DAB36D /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
 			productRefGroup = A01430372B597E8300668B9B /* Products */;
 			projectDirPath = "";
@@ -187,6 +194,7 @@
 				A014303C2B597E8300668B9B /* TodosView.swift in Sources */,
 				A00BBF8C2B5F05F9004F4885 /* DebugDashboard.swift in Sources */,
 				A01430482B5A7AFC00668B9B /* CreateTodoView.swift in Sources */,
+				A00BBF8E2B6016D5004F4885 /* GPTProvider.swift in Sources */,
 				A014303A2B597E8300668B9B /* AidoApp.swift in Sources */,
 				A00BBF882B5F005E004F4885 /* Todo.swift in Sources */,
 			);
@@ -414,6 +422,14 @@
 				minimumVersion = 5.8.1;
 			};
 		};
+		A07BB0562B60331400DAB36D /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess?tab=readme-ov-file";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -421,6 +437,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A072C89A2B5AC74F001B806C /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		A07BB0572B60331400DAB36D /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A07BB0562B60331400DAB36D /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
