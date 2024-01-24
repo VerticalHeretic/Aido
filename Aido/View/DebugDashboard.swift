@@ -5,8 +5,8 @@
 //  Created by Łukasz Stachnik on 22/01/2024.
 //
 
-import SwiftUI
 import KeychainAccess
+import SwiftUI
 
 struct DebugDashboard: View {
 
@@ -46,7 +46,7 @@ struct DebugDashboard: View {
             Section("Authentication") {
                 SecureField("GPT Auth Token", text: $model.gptToken)
                     .onSubmit {
-                        do{
+                        do {
                             try model.keychain.set(model.gptToken, key: "gptToken")
                         } catch {
                             print(error)

@@ -5,6 +5,7 @@
 //  Created by Łukasz Stachnik on 19/01/2024.
 //
 
+import NaturalLanguage
 import SwiftData
 import SwiftUI
 
@@ -67,8 +68,11 @@ struct CreateTodoView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     if model.isValidForSaving() {
-                        modelContext.insert(model.createTodo())
-                        dismiss()
+                        Task {
+                            let todo = await model.createTodo()
+                            modelContext.insert(todo)
+                            dismiss()
+                        }
                     }
                 } label: {
                     Text("Save")
@@ -107,12 +111,21 @@ extension CreateTodoView {
             return true
         }
 
-        func createTodo() -> Todo {
-            Todo(
+        func createTodo() async -> Todo {
+            await Todo(
                 name: name,
                 notes: notes.isEmpty ? nil : notes,
-                deadline: isShowingDatePicker ? deadline : nil
+                deadline: isShowingDatePicker ? deadline : nil,
+                sentiment: retrieveSentiment(for: name)
             )
+        }
+
+        private func retrieveSentiment(for text: String) async -> Double {
+            let tagger = NLTagger(tagSchemes: [.tokenType, .sentimentScore])
+            tagger.string = text
+            let (sentiment, _) = tagger.tag(at: text.startIndex, unit: .paragraph, scheme: .sentimentScore)
+
+            return Double(sentiment?.rawValue ?? "0") ?? 0
         }
     }
 }

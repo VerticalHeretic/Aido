@@ -61,6 +61,7 @@ struct TodosView: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Text(todo.name)
+                                .foregroundStyle(getColorBasedOnSentiment(todo.sentiment))
 
                             if let notes = todo.notes {
                                 Text(notes)
@@ -138,6 +139,18 @@ struct TodosView: View {
                     Text(todo.name)
                 }
             }
+        }
+    }
+
+    func getColorBasedOnSentiment(_ sentiment: Double?) -> Color {
+        guard let sentiment else { return .primary }
+
+        if sentiment >= 0.5 {
+            return .green
+        } else if sentiment <= -0.5 {
+            return .red
+        } else {
+            return .primary
         }
     }
 }
