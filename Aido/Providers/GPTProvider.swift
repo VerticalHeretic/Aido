@@ -35,13 +35,24 @@ struct ChatCompletionRequest: Codable {
     let messages: [ChatCompletionMessage]
 }
 
+enum GPTModel: String {
+    case gpt4 = "gpt-4"
+    case gpt35 = "gpt-3.5-turbo"
+}
+
 final class GPTProvider: ModelProvider {
 
-    let keychain = Keychain()
+    private let keychain: Keychain
+    private let model: GPTModel
+
+    init(keychain: Keychain = Keychain(), model: GPTModel = .gpt35) {
+        self.keychain = keychain
+        self.model = model
+    }
 
     func generate(prompt: String, responseHandler: @escaping (String) -> ()) {
         let request = ChatCompletionRequest(
-            model: "gpt-4",
+            model: model.rawValue,
             stream: true,
             messages: [
                 .init(role: "system", content: "You are a todo application assistant, you are creating a actionable checklists for the given todo. Those can be funny and even a little bit naughty"),

@@ -8,6 +8,7 @@
 import NaturalLanguage
 import SwiftData
 import SwiftUI
+import OSLog
 
 struct CreateTodoView: View {
     @Environment(\.modelContext) var modelContext
@@ -124,8 +125,9 @@ extension CreateTodoView {
             let tagger = NLTagger(tagSchemes: [.tokenType, .sentimentScore])
             tagger.string = text
             let (sentiment, _) = tagger.tag(at: text.startIndex, unit: .paragraph, scheme: .sentimentScore)
-
-            return Double(sentiment?.rawValue ?? "0") ?? 0
+            let score = Double(sentiment?.rawValue ?? "0") ?? 0
+            Logger.general.debug("Sentiment score for text: \(text, privacy: .private), score: \(score)")
+            return score
         }
     }
 }

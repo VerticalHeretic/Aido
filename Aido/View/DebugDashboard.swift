@@ -33,10 +33,12 @@ struct DebugDashboard: View {
         List {
             Section("LLM used for generations") {
                 Button("GPT 4.0") {
-                    AppConfiguration.shared.modelProvider = GPTProvider()
+                    AppConfiguration.shared.modelProvider = GPTProvider(model: .gpt4)
                 }
 
-                Button("GPT 3.5") {}
+                Button("GPT 3.5") {
+                    AppConfiguration.shared.modelProvider = GPTProvider(model: .gpt35)
+                }
 
                 Button("Mistral") {
                     AppConfiguration.shared.modelProvider = OllamaProvider()

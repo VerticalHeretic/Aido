@@ -15,6 +15,7 @@
 		A014303E2B597E8400668B9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A014303D2B597E8400668B9B /* Assets.xcassets */; };
 		A01430412B597E8400668B9B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A01430402B597E8400668B9B /* Preview Assets.xcassets */; };
 		A01430482B5A7AFC00668B9B /* CreateTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01430472B5A7AFC00668B9B /* CreateTodoView.swift */; };
+		A01DDB152B629C2100F38F16 /* Logger+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01DDB142B629C2100F38F16 /* Logger+init.swift */; };
 		A072C89C2B5AC74F001B806C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A072C89B2B5AC74F001B806C /* Alamofire */; };
 		A072C89E2B5AC773001B806C /* OllamaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A072C89D2B5AC773001B806C /* OllamaProvider.swift */; };
 		A07BB0582B60331400DAB36D /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A07BB0572B60331400DAB36D /* KeychainAccess */; };
@@ -30,6 +31,7 @@
 		A014303D2B597E8400668B9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A01430402B597E8400668B9B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A01430472B5A7AFC00668B9B /* CreateTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTodoView.swift; sourceTree = "<group>"; };
+		A01DDB142B629C2100F38F16 /* Logger+init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+init.swift"; sourceTree = "<group>"; };
 		A072C89D2B5AC773001B806C /* OllamaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaProvider.swift; sourceTree = "<group>"; };
 		A072C89F2B5ACAA8001B806C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,7 @@
 				A014303D2B597E8400668B9B /* Assets.xcassets */,
 				A014303F2B597E8400668B9B /* Preview Content */,
 				A01430472B5A7AFC00668B9B /* CreateTodoView.swift */,
+				A01DDB142B629C2100F38F16 /* Logger+init.swift */,
 			);
 			path = Aido;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				A072C89E2B5AC773001B806C /* OllamaProvider.swift in Sources */,
 				A014303C2B597E8300668B9B /* TodosView.swift in Sources */,
 				A00BBF8C2B5F05F9004F4885 /* DebugDashboard.swift in Sources */,
+				A01DDB152B629C2100F38F16 /* Logger+init.swift in Sources */,
 				A01430482B5A7AFC00668B9B /* CreateTodoView.swift in Sources */,
 				A00BBF8E2B6016D5004F4885 /* GPTProvider.swift in Sources */,
 				A014303A2B597E8300668B9B /* AidoApp.swift in Sources */,
