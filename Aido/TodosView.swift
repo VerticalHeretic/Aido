@@ -128,7 +128,6 @@ struct TodosView: View {
                     } label: {
                         Label("Debug Dashboard", systemImage: "list.dash")
                     }
-
                 }
             }
             .navigationDestination(for: NavigationStackManager.Destination.self) { destination in

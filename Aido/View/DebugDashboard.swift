@@ -32,6 +32,25 @@ struct DebugDashboard: View {
     var body: some View {
         List {
             Section("LLM used for generations") {
+                HStack {
+                    Text("Currently selected model for generation:")
+                    if let gpt = AppConfiguration.shared.modelProvider as? GPTProvider {
+                        switch gpt.model {
+                        case .gpt4:
+                            Text("GPT-4.0")
+                                .fontWeight(.bold)
+                        case .gpt35:
+                            Text("GPT-3.5")
+                                .fontWeight(.bold)
+                        }
+                    }
+
+                    if let ollama = AppConfiguration.shared.modelProvider as? OllamaProvider {
+                        Text("Mistral")
+                            .fontWeight(.bold)
+                    }
+                }
+
                 Button("GPT 4.0") {
                     AppConfiguration.shared.modelProvider = GPTProvider(model: .gpt4)
                 }

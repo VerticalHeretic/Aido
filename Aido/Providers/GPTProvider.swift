@@ -43,7 +43,7 @@ enum GPTModel: String {
 final class GPTProvider: ModelProvider {
 
     private let keychain: Keychain
-    private let model: GPTModel
+    private(set) var model: GPTModel
 
     init(keychain: Keychain = Keychain(), model: GPTModel = .gpt35) {
         self.keychain = keychain
