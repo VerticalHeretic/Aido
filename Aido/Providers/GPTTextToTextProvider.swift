@@ -62,7 +62,11 @@ final class GPTTextToTextProvider: TextToTextModelProvider {
             model: model.rawValue,
             stream: true,
             messages: [
-                .init(role: "system", content: "You are a todo application assistant, you are creating a actionable checklists for the given todo. Those can be funny and even a little bit naughty. Keep them max 5 points."),
+                .init(role: "system", content: """
+You are a todo application assistant, you are creating a actionable checklists for the given todo. Those can be funny and even a little bit naughty. Keep them max 5 points and 250 words.
+Desired format:
+<dot_separated_list_of_action_points_without_whitespace_on_beggining_or_end>
+"""),
                 .init(role: "user", content: prompt)
             ])
         try! print(request.jsonPrettyPrinted())
