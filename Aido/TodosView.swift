@@ -12,11 +12,11 @@ import SwiftUI
 @Observable
 final class AppConfiguration {
 
-    static let shared = AppConfiguration(modelProvider: OllamaProvider())
+    static let shared = AppConfiguration(modelProvider: OllamaTextToTextProvider())
 
-    var modelProvider: ModelProvider
+    var modelProvider: TextToTextModelProvider
 
-    init(modelProvider: ModelProvider) {
+    init(modelProvider: TextToTextModelProvider) {
         self.modelProvider = modelProvider
     }
 }

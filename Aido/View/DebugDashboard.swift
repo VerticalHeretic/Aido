@@ -35,15 +35,23 @@ struct DebugDashboard: View {
                 buildModelSelectionText(appConfig: .shared)
 
                 Button("GPT 4.0") {
-                    AppConfiguration.shared.modelProvider = GPTProvider(model: .gpt4)
+                    AppConfiguration.shared.modelProvider = GPTTextToTextProvider(model: .gpt4)
                 }
 
                 Button("GPT 3.5") {
-                    AppConfiguration.shared.modelProvider = GPTProvider(model: .gpt35)
+                    AppConfiguration.shared.modelProvider = GPTTextToTextProvider(model: .gpt35)
                 }
 
                 Button("Mistral") {
-                    AppConfiguration.shared.modelProvider = OllamaProvider()
+                    AppConfiguration.shared.modelProvider = OllamaTextToTextProvider(model: .mistral)
+                }
+
+                Button("llama2") {
+                    AppConfiguration.shared.modelProvider = OllamaTextToTextProvider(model: .llama2)
+                }
+
+                Button("llama2 Uncensored") {
+                    AppConfiguration.shared.modelProvider = OllamaTextToTextProvider(model: .llama2Uncensored)
                 }
             }
 
@@ -64,7 +72,7 @@ struct DebugDashboard: View {
     @ViewBuilder func buildModelSelectionText(appConfig: AppConfiguration) -> some View {
         var modelName = ""
 
-        if let gpt = AppConfiguration.shared.modelProvider as? GPTProvider {
+        if let gpt = AppConfiguration.shared.modelProvider as? GPTTextToTextProvider {
             switch gpt.model {
             case .gpt4:
                 modelName = "GPT-4.0"
@@ -73,8 +81,15 @@ struct DebugDashboard: View {
             }
         }
 
-        if let ollama = AppConfiguration.shared.modelProvider as? OllamaProvider {
-            modelName = "Mistral"
+        if let ollama = AppConfiguration.shared.modelProvider as? OllamaTextToTextProvider {
+            switch ollama.model {
+            case .mistral:
+                modelName = "Mistral"
+            case .llama2:
+                modelName = "llama2"
+            case .llama2Uncensored:
+                modelName = "llama2 Uncensored"
+            }
         }
 
         return Text("Currently selected model for generation: **\(modelName)**")

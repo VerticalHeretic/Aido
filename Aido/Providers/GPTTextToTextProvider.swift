@@ -35,17 +35,24 @@ struct ChatCompletionRequest: Codable {
     let messages: [ChatCompletionMessage]
 }
 
-enum GPTModel: String {
-    case gpt4 = "gpt-4"
-    case gpt35 = "gpt-3.5-turbo"
+enum GPTModel {
+
+    enum TextToText: String {
+        case gpt4 = "gpt-4"
+        case gpt35 = "gpt-3.5-turbo"
+    }
+
+    enum TextToImage: String {
+        case dalle3 = "dall-e-3"
+    }
 }
 
-final class GPTProvider: ModelProvider {
+final class GPTTextToTextProvider: TextToTextModelProvider {
 
     private let keychain: Keychain
-    private(set) var model: GPTModel
+    private(set) var model: GPTModel.TextToText
 
-    init(keychain: Keychain = Keychain(), model: GPTModel = .gpt35) {
+    init(keychain: Keychain = Keychain(), model: GPTModel.TextToText = .gpt35) {
         self.keychain = keychain
         self.model = model
     }
@@ -55,7 +62,7 @@ final class GPTProvider: ModelProvider {
             model: model.rawValue,
             stream: true,
             messages: [
-                .init(role: "system", content: "You are a todo application assistant, you are creating a actionable checklists for the given todo. Those can be funny and even a little bit naughty"),
+                .init(role: "system", content: "You are a todo application assistant, you are creating a actionable checklists for the given todo. Those can be funny and even a little bit naughty. Keep them max 5 points."),
                 .init(role: "user", content: prompt)
             ])
         try! print(request.jsonPrettyPrinted())

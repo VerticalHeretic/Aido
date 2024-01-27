@@ -9,40 +9,62 @@ import Alamofire
 import Foundation
 
 struct GenerateResponse: Codable {
-    let model, createdAt, response: String
+    let model, createdAt: String
+    let message: ChatCompletionMessage
     let done: Bool
 
     enum CodingKeys: String, CodingKey {
         case model
+        case message
         case createdAt = "created_at"
-        case response, done
+        case done
     }
 }
 
 struct GenerateRequest: Codable {
     let model: String
-    let prompt: String
+    let messages: [ChatCompletionMessage]
 }
 
-protocol ModelProvider {
+protocol TextToTextModelProvider {
     func generate(prompt: String, responseHandler: @escaping (String) -> ())
 }
 
-final class OllamaProvider: ModelProvider {
+enum OllamaModel {
+
+    enum TextToText: String {
+        case mistral
+        case llama2
+        case llama2Uncensored = "llama2-uncensored"
+    }
+}
+
+final class OllamaTextToTextProvider: TextToTextModelProvider {
+
+    private(set) var model: OllamaModel.TextToText
+
+    init(model: OllamaModel.TextToText = .mistral) {
+        self.model = model
+    }
 
     func generate(prompt: String, responseHandler: @escaping (String) -> ()) {
-        let request = GenerateRequest(model: "mistral", prompt: prompt)
+        let request = GenerateRequest(
+            model: model.rawValue,
+            messages: [
+                .init(role: "system", content: "You are a todo application assistant, you are creating a actionable checklists for the given todo. Those can be funny and even a little bit naughty. Keep them max 5 points."),
+                .init(role: "user", content: prompt)
+            ])
         try! print(request.jsonPrettyPrinted())
 
         AF
-            .streamRequest("http://localhost:11434/api/generate", method: .post, parameters: request, encoder: JSONParameterEncoder.prettyPrinted, automaticallyCancelOnStreamError: false)
+            .streamRequest("http://localhost:11434/api/chat", method: .post, parameters: request, encoder: JSONParameterEncoder.prettyPrinted, automaticallyCancelOnStreamError: false)
             .responseStreamDecodable(of: GenerateResponse.self) { stream in
                 switch stream.event {
                 case let .stream(result):
                     switch result {
                     case let .success(value):
                         print(value)
-                        responseHandler(value.response)
+                        responseHandler(value.message.content)
                     case let .failure(error):
                         print(error)
                     }

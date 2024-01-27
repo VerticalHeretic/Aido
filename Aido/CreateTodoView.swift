@@ -24,7 +24,7 @@ struct CreateTodoView: View {
 
                 Button {
                     model.notes = ""
-                    model.provider.generate(prompt: "Create a action plan for given todo (simple form): \(model.name)") { response in
+                    model.provider.generate(prompt: "\(model.name)") { response in
                         model.notes += response
                     }
                 } label: {
@@ -97,9 +97,9 @@ extension CreateTodoView {
         var isShowingDatePicker: Bool = false
         var showMissingFields: Bool = false
 
-        let provider: ModelProvider
+        let provider: TextToTextModelProvider
 
-        init(provider: ModelProvider = AppConfiguration.shared.modelProvider) {
+        init(provider: TextToTextModelProvider = AppConfiguration.shared.modelProvider) {
             self.provider = provider
         }
 
