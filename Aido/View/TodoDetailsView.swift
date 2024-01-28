@@ -13,25 +13,37 @@ struct TodoDetailsView: View {
     let todo: Todo
 
     var body: some View {
-        List {
-            Section("Details") {
-                Text(todo.name)
+        VStack(alignment: .center) {
+            if let data = todo.imageData, let uiImage = UIImage(data: data) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 160, height: 160, alignment: .center)
+                    .clipShape(RoundedRectangle(cornerRadius: 10.0))
+            }
 
-                if let notes = todo.notes {
-                    Text(notes)
-                }
+            List {
+                Section("Details") {
+                    HStack {
+                        Text(todo.name)
+                    }
 
-                HStack {
-                    Image(systemName: "calendar")
-                        .padding(4)
-                        .background(Color.red)
-                        .clipShape(RoundedRectangle(cornerRadius: 2))
-                        .foregroundStyle(Color.white)
+                    if let notes = todo.notes {
+                        Text(notes)
+                    }
 
-                    if let deadline = todo.deadline {
-                        Text(deadline.formatted(date: .long, time: .omitted))
-                            .font(.subheadline)
-                            .fontWeight(.bold)
+                    HStack {
+                        Image(systemName: "calendar")
+                            .padding(4)
+                            .background(Color.red)
+                            .clipShape(RoundedRectangle(cornerRadius: 2))
+                            .foregroundStyle(Color.white)
+
+                        if let deadline = todo.deadline {
+                            Text(deadline.formatted(date: .long, time: .omitted))
+                                .font(.subheadline)
+                                .fontWeight(.bold)
+                        }
                     }
                 }
             }
@@ -46,10 +58,10 @@ struct TodoDetailsView: View {
     return TodoDetailsView(todo: .init(
         name: "Do a laundry",
         notes: """
-1. Put it all in to the laundry bin
-2. Put it all in to the washing machine
-3. Turn it on
-""",
+        1. Put it all in to the laundry bin
+        2. Put it all in to the washing machine
+        3. Turn it on
+        """,
         deadline: .distantFuture
     )).modelContainer(container)
 }

@@ -58,6 +58,7 @@ struct TodosView: View {
         NavigationStack(path: $navigationStackManager.navPath) {
             ZStack(alignment: .bottomTrailing) {
                 List(todos) { todo in
+
                     HStack {
                         VStack(alignment: .leading) {
                             Text(todo.name)
@@ -78,6 +79,14 @@ struct TodosView: View {
                         }
 
                         Spacer()
+
+                        if let data = todo.imageData, let uiImage = UIImage(data: data) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 30, height: 30, alignment: .center)
+                                .clipShape(RoundedRectangle(cornerRadius: 10.0))
+                        }
 
                         Button(action: {
                             todo.isCompleted = true
@@ -165,15 +174,26 @@ extension TodosView {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: Todo.self, configurations: config)
 
-    for i in 1..<10 {
+    for i in 1..<3 {
         let user = Todo(name: "Example Todo \(i)")
         container.mainContext.insert(user)
     }
 
-    for i in 1..<10 {
+    for i in 1..<3 {
         let user = Todo(name: "Example Todo With Deadline \(i)", deadline: .distantFuture)
         container.mainContext.insert(user)
     }
+
+    for i in 1..<3 {
+        let user = Todo(name: "Example Todo With Note \(i)", notes: "Random string of notes: 1. DO A FLIP")
+        container.mainContext.insert(user)
+    }
+
+    let todoPositive = Todo(name: "Example Todo With Positive Sentiment", sentiment: 1.0)
+    let todoNegative = Todo(name: "Example Todo With Negative Sentiment", sentiment: -1.0)
+
+    container.mainContext.insert(todoNegative)
+    container.mainContext.insert(todoPositive)
 
     return TodosView()
         .modelContainer(container)

@@ -6,9 +6,9 @@
 //
 
 import NaturalLanguage
+import OSLog
 import SwiftData
 import SwiftUI
-import OSLog
 
 struct CreateTodoView: View {
     @Environment(\.modelContext) var modelContext
@@ -30,6 +30,7 @@ struct CreateTodoView: View {
                 } label: {
                     Image(systemName: "text.badge.plus")
                 }
+                .disabled(model.name.isEmpty)
             }
 
             if !model.notes.isEmpty {
@@ -79,6 +80,23 @@ struct CreateTodoView: View {
                     Text("Save")
                 }
             }
+
+            ToolbarItem(placement: .topBarLeading) {
+                if let data = model.imageData, let uiImage = UIImage(data: data) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 30, height: 30)
+                } else {
+                    Button(action: {
+                        Task {
+                            await model.generateTodoImage()
+                        }
+                    }, label: {
+                        Label("Create Icon", systemImage: "photo.artframe")
+                    })
+                }
+            }
         }
         .navigationTitle("Create Todo")
         .navigationBarTitleDisplayMode(.inline)
@@ -93,14 +111,20 @@ extension CreateTodoView {
         var name: String = ""
         var deadline: Date = .init()
         var notes: String = ""
+        var imageData: Data?
 
         var isShowingDatePicker: Bool = false
         var showMissingFields: Bool = false
 
         let provider: TextToTextModelProvider
+        let imageProvider: GPTTextToImageProvider
 
-        init(provider: TextToTextModelProvider = AppConfiguration.shared.modelProvider) {
+        init(
+            provider: TextToTextModelProvider = AppConfiguration.shared.modelProvider,
+            imageProvider: GPTTextToImageProvider = .init()
+        ) {
             self.provider = provider
+            self.imageProvider = imageProvider
         }
 
         func isValidForSaving() -> Bool {
@@ -117,12 +141,23 @@ extension CreateTodoView {
                 name: name,
                 notes: notes.isEmpty ? nil : notes,
                 deadline: isShowingDatePicker ? deadline : nil,
-                sentiment: retrieveSentiment(for: name)
+                sentiment: retrieveSentiment(for: name),
+                imageData: imageData
             )
         }
 
+        func generateTodoImage() async {
+            guard !name.isEmpty else {
+                showMissingFields = true
+                return
+            }
+
+            guard let imageData = await imageProvider.generate(prompt: name) else { return }
+            self.imageData = imageData
+        }
+
         private func retrieveSentiment(for text: String) async -> Double {
-            let tagger = NLTagger(tagSchemes: [.tokenType, .sentimentScore])
+            let tagger = NLTagger(tagSchemes: [.sentimentScore])
             tagger.string = text
             let (sentiment, _) = tagger.tag(at: text.startIndex, unit: .paragraph, scheme: .sentimentScore)
             let score = Double(sentiment?.rawValue ?? "0") ?? 0

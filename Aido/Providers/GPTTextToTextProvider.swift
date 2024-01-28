@@ -44,6 +44,7 @@ enum GPTModel {
 
     enum TextToImage: String {
         case dalle3 = "dall-e-3"
+        case dalle2 = "dale-e-2"
     }
 }
 
