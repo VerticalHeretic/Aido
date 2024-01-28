@@ -18,6 +18,7 @@
 		A01DDB152B629C2100F38F16 /* Logger+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01DDB142B629C2100F38F16 /* Logger+init.swift */; };
 		A05B3E892B6639B700B06E9A /* TodoDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05B3E882B6639B700B06E9A /* TodoDetailsView.swift */; };
 		A05B3E8C2B66C70600B06E9A /* GPTTextToImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05B3E8B2B66C70600B06E9A /* GPTTextToImageProvider.swift */; };
+		A05B3E8E2B66EE3D00B06E9A /* GPTTextToSpeechProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05B3E8D2B66EE3D00B06E9A /* GPTTextToSpeechProvider.swift */; };
 		A072C89C2B5AC74F001B806C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A072C89B2B5AC74F001B806C /* Alamofire */; };
 		A072C89E2B5AC773001B806C /* OllamaTextToTextProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A072C89D2B5AC773001B806C /* OllamaTextToTextProvider.swift */; };
 		A07BB0582B60331400DAB36D /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A07BB0572B60331400DAB36D /* KeychainAccess */; };
@@ -35,8 +36,8 @@
 		A01430472B5A7AFC00668B9B /* CreateTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTodoView.swift; sourceTree = "<group>"; };
 		A01DDB142B629C2100F38F16 /* Logger+init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+init.swift"; sourceTree = "<group>"; };
 		A05B3E882B6639B700B06E9A /* TodoDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailsView.swift; sourceTree = "<group>"; };
-		A05B3E8A2B66718900B06E9A /* Sandbox.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Sandbox.playground; path = ../../Sandbox.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A05B3E8B2B66C70600B06E9A /* GPTTextToImageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTTextToImageProvider.swift; sourceTree = "<group>"; };
+		A05B3E8D2B66EE3D00B06E9A /* GPTTextToSpeechProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTTextToSpeechProvider.swift; sourceTree = "<group>"; };
 		A072C89D2B5AC773001B806C /* OllamaTextToTextProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaTextToTextProvider.swift; sourceTree = "<group>"; };
 		A072C89F2B5ACAA8001B806C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,6 +69,7 @@
 				A072C89D2B5AC773001B806C /* OllamaTextToTextProvider.swift */,
 				A00BBF8D2B6016D5004F4885 /* GPTTextToTextProvider.swift */,
 				A05B3E8B2B66C70600B06E9A /* GPTTextToImageProvider.swift */,
+				A05B3E8D2B66EE3D00B06E9A /* GPTTextToSpeechProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -101,7 +103,6 @@
 		A01430382B597E8300668B9B /* Aido */ = {
 			isa = PBXGroup;
 			children = (
-				A05B3E8A2B66718900B06E9A /* Sandbox.playground */,
 				A00BBF8A2B5F05EC004F4885 /* View */,
 				A00BBF892B5F0098004F4885 /* Providers */,
 				A00BBF862B5F0056004F4885 /* Models */,
@@ -209,6 +210,7 @@
 				A01430482B5A7AFC00668B9B /* CreateTodoView.swift in Sources */,
 				A00BBF8E2B6016D5004F4885 /* GPTTextToTextProvider.swift in Sources */,
 				A014303A2B597E8300668B9B /* AidoApp.swift in Sources */,
+				A05B3E8E2B66EE3D00B06E9A /* GPTTextToSpeechProvider.swift in Sources */,
 				A05B3E8C2B66C70600B06E9A /* GPTTextToImageProvider.swift in Sources */,
 				A00BBF882B5F005E004F4885 /* Todo.swift in Sources */,
 			);

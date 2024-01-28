@@ -53,8 +53,8 @@ struct TodosView: View {
     }, sort: \Todo.deadline) var todos: [Todo]
 
     @State private var model = Model()
-
     @State private var navigationStackManager = NavigationStackManager()
+    @AppStorage("stt-method") private var textToSpeechMethod: TextToSpeechMethod = .native
 
     var body: some View {
         NavigationStack(path: $navigationStackManager.navPath) {
@@ -62,7 +62,14 @@ struct TodosView: View {
                 List(todos) { todo in
                     HStack {
                         Button(action: {
-                            model.speakTheTodo(todo)
+                            switch textToSpeechMethod {
+                            case .native:
+                                model.speakTheTodo(todo)
+                            case .openAI:
+                                Task {
+                                    await model.generateSpeakForTodo(todo)
+                                }
+                            }
                         }, label: {
                             Image(systemName: "speaker.circle")
                                 .scaleEffect(1.3)
@@ -175,13 +182,14 @@ struct TodosView: View {
 extension TodosView {
     @Observable
     class Model {
+        let audioPlayerManager = AudioPlayerManager()
         let synthesizer = AVSpeechSynthesizer()
-
+        let textToSpeechProvider = GPTTextToSpeechProvider()
         var isShowingCreateTask = false
 
         func speakTheTodo(_ todo: Todo) {
             let utterance = AVSpeechUtterance(string: todo.name)
-            utterance.voice = AVSpeechSynthesisVoice(language: "pl-PL")
+            utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
             print(AVSpeechSynthesisVoice.speechVoices())
             let status = AVSpeechSynthesizer.personalVoiceAuthorizationStatus
 
@@ -192,6 +200,11 @@ extension TodosView {
             } else {
                 synthesizer.speak(utterance)
             }
+        }
+
+        func generateSpeakForTodo(_ todo: Todo) async {
+            let data = await textToSpeechProvider.generate(text: todo.name + (todo.notes ?? ""))
+            audioPlayerManager.playAudio(from: data)
         }
     }
 }

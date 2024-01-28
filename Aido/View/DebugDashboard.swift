@@ -8,6 +8,11 @@
 import KeychainAccess
 import SwiftUI
 
+enum TextToSpeechMethod: String, CaseIterable {
+    case native
+    case openAI
+}
+
 struct DebugDashboard: View {
 
     @Observable
@@ -28,6 +33,7 @@ struct DebugDashboard: View {
     }
 
     @State var model = Model()
+    @AppStorage("stt-method") private var textToSpeechMethod: TextToSpeechMethod = .native
 
     var body: some View {
         List {
@@ -64,6 +70,15 @@ struct DebugDashboard: View {
                             print(error)
                         }
                     }
+            }
+
+            Section("TTS") {
+                ForEach(TextToSpeechMethod.allCases, id: \.self) { method in
+                    Button(method.rawValue) {
+                        textToSpeechMethod = method
+                    }
+                    .foregroundStyle(method == self.textToSpeechMethod ? .green : .blue)
+                }
             }
         }
         .navigationTitle("Debug Dashboard")
