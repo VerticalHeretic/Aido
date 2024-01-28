@@ -135,7 +135,7 @@ struct TodosView: View {
                 case .debugDashboard:
                     DebugDashboard()
                 case .taskDetails(let todo):
-                    Text(todo.name)
+                    TodoDetailsView(todo: todo)
                 }
             }
         }
