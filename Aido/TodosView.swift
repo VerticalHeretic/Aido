@@ -5,7 +5,9 @@
 //  Created by Łukasz Stachnik on 18/01/2024.
 //
 
+import AVFoundation
 import Observation
+import OSLog
 import SwiftData
 import SwiftUI
 
@@ -58,8 +60,14 @@ struct TodosView: View {
         NavigationStack(path: $navigationStackManager.navPath) {
             ZStack(alignment: .bottomTrailing) {
                 List(todos) { todo in
-
                     HStack {
+                        Button(action: {
+                            model.speakTheTodo(todo)
+                        }, label: {
+                            Image(systemName: "speaker.circle")
+                                .scaleEffect(1.3)
+                        })
+
                         VStack(alignment: .leading) {
                             Text(todo.name)
                                 .foregroundStyle(getColorBasedOnSentiment(todo.sentiment))
@@ -108,6 +116,7 @@ struct TodosView: View {
                     .onTapGesture {
                         navigationStackManager.navigate(to: .taskDetails(todo: todo))
                     }
+                    .buttonStyle(BorderlessButtonStyle())
                 }
 
                 Button(action: {
@@ -166,7 +175,24 @@ struct TodosView: View {
 extension TodosView {
     @Observable
     class Model {
+        let synthesizer = AVSpeechSynthesizer()
+
         var isShowingCreateTask = false
+
+        func speakTheTodo(_ todo: Todo) {
+            let utterance = AVSpeechUtterance(string: todo.name)
+            utterance.voice = AVSpeechSynthesisVoice(language: "pl-PL")
+            print(AVSpeechSynthesisVoice.speechVoices())
+            let status = AVSpeechSynthesizer.personalVoiceAuthorizationStatus
+
+            if status.rawValue == 1 || status.rawValue == 0 {
+                Task {
+                    await AVSpeechSynthesizer.requestPersonalVoiceAuthorization()
+                }
+            } else {
+                synthesizer.speak(utterance)
+            }
+        }
     }
 }
 
