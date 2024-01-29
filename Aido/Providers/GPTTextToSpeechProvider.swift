@@ -65,8 +65,12 @@ final class GPTTextToSpeechProvider {
     }
 }
 
-class AudioPlayerManager {
+final class AudioPlayerManager {
     private var audioPlayer: AVAudioPlayer?
+
+    func stopAudio() {
+        audioPlayer?.stop()
+    }
 
     func playAudio(from base64Data: Data?) {
         guard let base64Data else {

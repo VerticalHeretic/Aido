@@ -126,19 +126,36 @@ struct TodosView: View {
                     .buttonStyle(BorderlessButtonStyle())
                 }
 
-                Button(action: {
-                    model.isShowingCreateTask = true
-                }, label: {
-                    Circle()
-                        .frame(width: 45, height: 45)
-                        .overlay {
-                            Image(systemName: "plus")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundStyle(.white)
-                        }
-                        .padding()
-                })
+                HStack {
+                    Button(action: {
+                        model.audioPlayerManager.stopAudio()
+                    }, label: {
+                        Circle()
+                            .frame(width: 45, height: 45)
+                            .overlay {
+                                Image(systemName: "stop.fill")
+                                    .foregroundStyle(.white)
+                            }
+                            .padding()
+                    })
+                    .foregroundStyle(.red)
+
+                    Spacer()
+
+                    Button(action: {
+                        model.isShowingCreateTask = true
+                    }, label: {
+                        Circle()
+                            .frame(width: 45, height: 45)
+                            .overlay {
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .foregroundStyle(.white)
+                            }
+                            .padding()
+                    })
+                }
             }
             .navigationTitle("Todos")
             .sheet(isPresented: $model.isShowingCreateTask) {
@@ -205,6 +222,11 @@ extension TodosView {
         func generateSpeakForTodo(_ todo: Todo) async {
             let data = await textToSpeechProvider.generate(text: todo.name + (todo.notes ?? ""))
             audioPlayerManager.playAudio(from: data)
+        }
+
+        func stop() {
+            audioPlayerManager.stopAudio()
+            synthesizer.stopSpeaking(at: .word)
         }
     }
 }
